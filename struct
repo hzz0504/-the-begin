@@ -1,0 +1,15 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include <stdio.h>
+#include<string.h>
+struct book
+{
+	char name[34];
+	short price;
+};
+int main()
+{
+	struct book a1 = { "0000",32 };
+	strcpy（a1.name，"加油"）;
+  printf("%s\n",a1.name);
+  return 0;
+}
