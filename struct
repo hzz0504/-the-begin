@@ -9,7 +9,7 @@ struct book
 int main()
 {
 	struct book a1 = { "0000",32 };
-	strcpy（a1.name，"加油"）;
+	strcpy（a1.name，"加油"）;//字符串拷贝，换名字
   printf("%s\n",a1.name);
   return 0;
 }
