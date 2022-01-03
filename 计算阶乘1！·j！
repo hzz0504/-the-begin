@@ -1,0 +1,19 @@
+//计算j的阶乘之和；1！+2！+3！+...+j！
+#define _CRT_SECURE_NO_WARNINGS 1
+#include <stdio.h>
+int main()
+{
+	int i = 0;
+	int a = 1;
+	int n = 0;
+	int sum = 0;
+	int j;
+	scanf("%d", &j);
+	for (n = 1; n <= j; n++)
+	{
+		a = a * n;
+		sum = sum + a;
+	}
+	printf("%d\n", sum);
+	return 0;
+}
