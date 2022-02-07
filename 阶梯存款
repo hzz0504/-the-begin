@@ -1,0 +1,115 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+//三年阶梯存款（比例为3：3：4）和定期存款
+double pr()//存入本金多少
+{
+	double a;
+	printf("请选择你要存入的本金\n");
+	scanf("%lf", &a);
+	return a;
+}
+int year()//存入年限
+{
+	int n;
+	printf("请选择你要存入的年限\n");
+	scanf("%d", &n);
+	return n;
+}
+int whether()//是否阶梯存款
+{
+	int m;
+	printf("是否阶梯存储（是：输入1，否：输入0）\n");
+	scanf("%d", &m);
+	return m;
+}
+void save()
+{
+	printf("三年阶梯存款（比例为3：3：4）和定期存款\n");
+	double a=pr();
+	int n = year();
+	int m = whether();
+	double a1 = a * 0.3;
+	double a2 = a * 0.3;
+	double a3 = a * 0.4;
+	double sum = 0;
+	if(m!=0)
+	{
+		if (n==1)
+		{
+			a1 = a1 * (1 + 0.02* n);
+		}
+		else if (n == 2)
+		{
+			a1 = a1 * (1 + 0.02* (n-1));
+			a2 = a2 * (1 + 0.03* n); 
+		}
+		else if(n==3)
+		{
+			a1 = a1 * (1 + 0.02* 1);
+			a2 = a2 * (1 + 0.03* 2);
+			a3 = a3 * (1 + 0.04* 3);
+		}
+		else
+		{
+			int b = n % 3;
+			switch (b)
+			{
+			case 0://3的倍数年
+				{
+					a1 = a1 * 0.02 * 1 + a1 * (1 + 0.04* (n-3));
+					a2 = a2 * 0.03 * 2 + a2 * (1 + 0.04* (n-3));
+					a3 = a3 * (1 + 0.04* n);
+					break;
+				}
+			case 1://4,7等等3n+1年
+				{
+					if (n == 4)
+					{
+						a1 = a1 * 0.02 * 1 + a1 * (1 + 0.04* (n - 1));
+						a2 = a2 * 0.03 * 2 + a2 ;
+						a3 = a3 * (1 + 0.04 * (n - 1));
+					}
+					else
+					{
+						a1 = a1 * 0.02 * 1 + a1 * (1 + 0.04* (n - 1));
+						a2 = a2 * 0.03 * 2 + a2 * (1 + 0.04 * (n - 4));
+						a3 = a3 * (1 + 0.04* (n- 1));
+					}
+					break;
+				}
+			case 2://5，8，等等3n+2年
+				{
+					a1 = a1 * 0.02 * 1 + a1 * (1 + 0.04* (n-2));
+					a2 = a2 * 0.03 * 2 + a2 * (1 + 0.04 * (n-2));
+					a3 = a3 * (1 + 0.04 * (n-2));
+				}
+				break;
+			}
+			
+		}
+		sum = a1 + a2 + a3;
+		printf("%lf\n", sum);
+	}
+	else
+	{
+		switch (n % 3)
+		{
+		case 0:
+		{
+			sum = a * (1 + 0.04 * n);
+			break;
+		}
+		default:
+		{
+			sum = a * (1 + 0.04 * (n/3)*3);
+			break;
+		}
+		}
+		
+		printf("%lf\n", sum);
+	}
+}
+int main()
+{
+	save();
+}
