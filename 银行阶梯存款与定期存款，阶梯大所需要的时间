@@ -1,0 +1,128 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<string.h>
+//三年阶梯存款（比例为3：3：4）和定期存款
+//存入本金
+double pr()
+{
+	double a;
+	printf("请选择你要存入的本金\n");
+	scanf("%lf", &a);
+	return a;
+}
+//存入年限
+int year()
+{
+	int n;
+	printf("请选择你要存入的年限\n");
+	scanf("%d", &n);
+	return n;
+}
+//计算最佳存入年限
+void save()
+{
+	int m = 1;
+	double a = pr();
+	double sum1 =0;
+	double sum2 =0;
+	int n = year();
+	while(m!=0)
+	{
+		double a1 = a * 0.3;
+		double a2 = a * 0.3;
+		double a3 = a * 0.4;
+		//double sum = 0;
+		//阶梯
+		{
+			if (n == 1)
+			{
+				a1 = a1 * (1 + 0.02 * n);
+			}
+			else if (n == 2)
+			{
+				a1 = a1 * (1 + 0.02 * (n - 1));
+				a2 = a2 * (1 + 0.03 * n);
+			}
+			else if (n == 3)
+			{
+				a1 = a1 * (1 + 0.02 * 1);
+				a2 = a2 * (1 + 0.03 * 2);
+				a3 = a3 * (1 + 0.04 * 3);
+			}
+			else
+			{
+				int b = n % 3;
+				switch (b)
+				{
+				case 0://3的倍数年
+				{
+					a1 = a1 * 0.02 * 1 + a1 * (1 + 0.04 * (n - 3));
+					a2 = a2 * 0.03 * 2 + a2 * (1 + 0.04 * (n - 3));
+					a3 = a3 * (1 + 0.04 * n);
+					break;
+				}
+				case 1://4,7等等3n+1年
+				{
+					if (n == 4)
+					{
+						a1 = a1 * 0.02 * 1 + a1 * (1 + 0.04 * (n - 1));
+						a2 = a2 * 0.03 * 2 + a2;
+						a3 = a3 * (1 + 0.04 * (n - 1));
+					}
+					else
+					{
+						a1 = a1 * 0.02 * 1 + a1 * (1 + 0.04 * (n - 1));
+						a2 = a2 * 0.03 * 2 + a2 * (1 + 0.04 * (n - 4));
+						a3 = a3 * (1 + 0.04 * (n - 1));
+					}
+					break;
+				}
+				case 2://5，8，等等3n+2年
+				{
+					a1 = a1 * 0.02 * 1 + a1 * (1 + 0.04 * (n - 2));
+					a2 = a2 * 0.03 * 2 + a2 * (1 + 0.04 * (n - 2));
+					a3 = a3 * (1 + 0.04 * (n - 2));
+					break;
+				}
+				}
+			}
+		sum1 = a1 + a2 + a3;
+		}
+
+	//常规存储
+		{
+			switch (n % 3)
+			{
+			case 0:
+			{
+				sum2 = a * (1 + 0.04 * n);
+				break;
+			}
+			default:
+			{
+				sum2 = a * (1 + 0.04 * (n / 3) * 3);
+				break;
+			}
+			}
+		}
+		//比较两者存钱当年可支配金额最大者
+		if (sum1 > sum2)
+		{
+			m = 0;
+		}
+		else
+		{
+			m++;
+			n++;
+		}
+	}
+	printf("阶梯sum1=%lf\n", sum1);
+	printf("定期sum2=%lf\n", sum2);
+	printf("当需要%d年阶梯存款比定期存款当年到手钱多\n", n);
+}
+int main()
+{
+	printf("三年阶梯存款（比例为3：3：4）和定期存款\n");
+	save();
+	return 0;
+}
